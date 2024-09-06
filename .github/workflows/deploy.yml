@@ -23,11 +23,11 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "DATABASE_URL=${{ vars.DATABASE_URL }}" >> $GITHUB_ENV
-          echo "DIRECT_URL=${{ vars.DIRECT_URL }}" >> $GITHUB_ENV
-          echo "PUBLIC_SUPABASE_URL=${{ vars.PUBLIC_SUPABASE_URL }}" >> $GITHUB_ENV
-          echo "PUBLIC_SUPABASE_KEY=${{ vars.PUBLIC_SUPABASE_KEY }}" >> $GITHUB_ENV
-          echo "PUBLIC_SUPABASE_BUCKET=${{ vars.PUBLIC_SUPABASE_BUCKET }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> $GITHUB_ENV
+          echo "PUBLIC_SUPABASE_URL=${{ secrets.PUBLIC_SUPABASE_URL }}" >> $GITHUB_ENV
+          echo "PUBLIC_SUPABASE_KEY=${{ secrets.PUBLIC_SUPABASE_KEY }}" >> $GITHUB_ENV
+          echo "PUBLIC_SUPABASE_BUCKET=${{ secrets.PUBLIC_SUPABASE_BUCKET }}" >> $GITHUB_ENV
 
       - name: Generate Prisma Client
         run: npx prisma generate
