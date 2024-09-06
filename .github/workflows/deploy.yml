@@ -21,6 +21,14 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Set up environment variables
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
@@ -32,8 +40,8 @@ jobs:
       - name: Generate Prisma Client
         run: npx prisma generate
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+      - name: Build the site
+        run: npm run build
 
   deploy:
     needs: build
