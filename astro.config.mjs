@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
+import vercel from "@astrojs/vercel/serverless";
 
 // const SERVER_PORT = 4321;
 // const LOCALHOST_URL = `http://localhost:${SERVER_PORT}`;
@@ -19,7 +20,7 @@ export default defineConfig({
   // site: BASE_URL,
   integrations: [tailwind(), react()],
   output: "server",
-  // adapter: "vercel()",
+  adapter: vercel(),
   images: {
     remotePatterns: [
       {
