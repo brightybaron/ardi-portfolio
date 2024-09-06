@@ -18,8 +18,7 @@ export default defineConfig({
   server: { port: SERVER_PORT },
   site: BASE_URL,
   integrations: [tailwind(), react()],
-  output: "server",
-
+  output: "static",
   images: {
     remotePatterns: [
       {
