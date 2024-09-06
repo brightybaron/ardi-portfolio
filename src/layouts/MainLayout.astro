@@ -1,0 +1,46 @@
+---
+import MobileNav from "@components/MobileNav";
+import MenuList from "@components/MenuList";
+
+const pageTitle = Astro.props.pageTitle || "Home";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/man.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Ardi Panda | {pageTitle}</title>
+  </head>
+  <body>
+    <main class="px-4 flex">
+      {/* SIDE MENU */}
+      <aside class="sm:block hidden w-full max-w-[25vw]">
+        <section
+          class="container sm:block hidden w-full max-w-[20vw] text-xs h-screen fixed"
+        >
+          <div class="w-12 pt-10">
+            <a href="/">
+              <img
+                src="/profile.png"
+                class="rounded-full"
+                alt="profile-image"
+                width={32}
+                height={32}
+              />
+            </a>
+          </div>
+          <MenuList client:only="react" />
+        </section>
+      </aside>
+      <section class="container w-full mt-32 sm:mt-16 pb-12 text-sm">
+        {/* MOBILE NAV */}
+        <MobileNav client:only="react" />
+
+        {/* MAIN CONTENT */}
+        <slot />
+      </section>
+    </main>
+  </body>
+</html>

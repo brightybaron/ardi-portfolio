@@ -1,0 +1,111 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+import NavFilter from "@components/NavFilter";
+import { getContent } from "@lib/data";
+
+const supabaseBucket = import.meta.env.PUBLIC_SUPABASE_BUCKET;
+const datas = await getContent();
+---
+
+<MainLayout>
+  <div class="w-full" id="main-right">
+    <div class="lg:w-1/2 w-full">
+      <p class="leading-6">
+        Hi, my name is Ardi Panda. I am a software engineer and designer living
+        in Gresik. I work remotely and travel often, bringing my camera along
+        with me. Sometimes I do photography. Here is what I am up to now.
+      </p>
+      <p class="text-gray-500 text-xs italic mt-3">
+        {
+          new Date("25 May 2024").toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        }
+      </p>
+    </div>
+    <div class="mt-12">
+      <section class="mt-8">
+        <div
+          class="button-group flex flex-row gap-4 w-full flex-wrap"
+          id="nav-tab"
+        >
+          <NavFilter client:only="react" />
+        </div>
+        <div class="mt-4 min-h-[250px]">
+          <div class="konten mt-4">
+            <!-- <Content datas={item} /> -->
+            <>
+              {
+                datas && datas.length > 0
+                  ? datas.map((content: any) => (
+                      <div
+                        class={`nav-content ${content.category} relative float-left w-[calc(1/2*100%-1.2rem)] md:w-[calc(1/3*100%-1.2rem)] lg:w-[calc(1/4*100%-1.2rem)] h-auto m-1 cursor-pointer overflow-hidden rounded-xl`}
+                        data-category={content.category}
+                      >
+                        <>
+                          <a
+                            class="w-full h-full relative flex flex-wrap overflow-hidden transition-all justify-center items-center aspect-square hover:scale-[1.03] rounded-xl border-b"
+                            href={`/${content.category}/${content.slug}`}
+                          >
+                            {content.images.map((img: any) => (
+                              <div class="grow shrink basis-auto w-1/2 aspect-square">
+                                <img
+                                  src={`${supabaseBucket}/${img.url}`}
+                                  alt={`${content.title} image ${content.images.indexOf(img) + 1}`}
+                                  class="w-full h-full object-cover transition-all"
+                                  width={150}
+                                  height={150}
+                                />
+                              </div>
+                            ))}
+                          </a>
+                          <>
+                            <div class="bg-white/30 w-full pl-px pt-1 flex flex-wrap justify-evenly">
+                              <p class="text-gray-500">
+                                {new Date(content.createdAt).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    month: "long",
+                                    day: "numeric",
+                                    year: "numeric",
+                                  }
+                                )}
+                              </p>
+                              <p
+                                class:list={[
+                                  "text-end capitalize text-gray-900 px-1",
+                                  {
+                                    "bg-teal-200":
+                                      content.category.includes("photos"),
+                                  },
+                                  {
+                                    "bg-indigo-200":
+                                      content.category.includes("posts"),
+                                  },
+                                  {
+                                    "bg-orange-200":
+                                      content.category.includes("projects"),
+                                  },
+                                ]}
+                              >
+                                {content.category}
+                              </p>
+                            </div>
+                          </>
+                          <p class="font-semibold mb-2 text-base underline text-center">
+                            {content.title}
+                          </p>
+                        </>
+                      </div>
+                    ))
+                  : "No Posts Found"
+              }
+            </>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</MainLayout>

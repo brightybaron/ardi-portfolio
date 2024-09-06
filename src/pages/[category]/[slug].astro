@@ -1,0 +1,83 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+import { getContent, getContentBySlug } from "@lib/data";
+import ImageSlider from "@components/ImageSlider";
+import { formatDate } from "@lib/utils";
+
+const supabaseBucket = import.meta.env.PUBLIC_SUPABASE_BUCKET;
+
+export async function getStaticPaths() {
+  const datas = await getContent();
+  return datas.map((data: any) => ({
+    params: { category: data.category, slug: data.slug },
+    props: { data },
+  }));
+}
+
+const { category, slug } = Astro.params;
+
+const data = await getContentBySlug(slug, category);
+
+export const prerender = true;
+---
+
+<MainLayout pageTitle={data?.title}>
+  {
+    data && data.category === "photos" ? (
+      <section class="mx-auto w-full sm:w-3/4">
+        <h1 class="font-semibold text-base mb-4 text-center">{data.title}</h1>
+        <div class="flex justify-between mb-4">
+          <span>
+            <small class="text-gray-500 block text-xs">Location</small>
+            <p class="text-gray-700 font-medium">{data.location}</p>
+          </span>
+          <span>
+            <small class="text-gray-500 block text-xs">Published at</small>
+            <p class="text-gray-500">
+              {data && formatDate(data.createdAt.toString())}
+            </p>
+          </span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-12">
+          {data.images.map((img) => (
+            <div class="w-full">
+              <img
+                src={`${supabaseBucket}/${img.url}`}
+                alt={`${data.title} foto ${data.images.indexOf(img) + 1}`}
+                class="w-full h-full aspect-[3/2] object-cover rounded-md"
+                width={1500}
+                height={1500}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <>
+        <ImageSlider
+          images={data?.images?.map((img) => ({ url: img.url })) ?? []}
+          bucket={supabaseBucket}
+          client:load
+        />
+        <section class="mt-4 mx-auto w-full sm:w-3/4">
+          <div class="flex justify-between">
+            <div class="flex-1">
+              <small class="text-gray-500 block text-xs">Published at</small>
+              <p class="text-gray-700 font-medium">
+                {data && formatDate(data.createdAt.toString())}
+              </p>
+            </div>
+            <div class="flex-1">
+              <small class="text-gray-500 block text-xs">Location</small>
+              <p class="text-gray-700 font-medium">{data?.location}</p>
+            </div>
+          </div>
+          <div class="mt-6">
+            <h1 class="font-semibold text-base mb-4">{data?.title}</h1>
+            <p class="mb-2">{data?.description}</p>
+          </div>
+        </section>
+      </>
+    )
+  }
+</MainLayout>

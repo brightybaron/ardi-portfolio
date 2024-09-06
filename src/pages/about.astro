@@ -1,0 +1,56 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+
+const supabaseBucket = import.meta.env.PUBLIC_SUPABASE_BUCKET;
+---
+
+<MainLayout pageTitle="About">
+  <div class="w-full lg:w-1/2">
+    <article class="leading-6 flex flex-col gap-4">
+      <div class="w-full h-full">
+        <img
+          class="w-full h-full aspect-[3/2] object-cover rounded-lg grayscale"
+          src={`${supabaseBucket}/profile.JPG`}
+          alt="profile-image"
+          width={1000}
+          height={1000}
+        />
+      </div>
+      <p>
+        Hey, I am Ardi. I am currently a senior software engineer on the
+        frontend infrastructure team at Dave. There, I focus on building dev
+        tools, creating CI/CD pipelines, maintaining our component library, and
+        more. I work remote from (beautiful) Denver, CO.
+      </p>
+      <p>
+        When Imm not building tools at Dave, you can find me working on my
+        private pilot license, organizing events, going to shows with my
+        friends, traveling with my camera, mixing music, and skiing the
+        beautiful Colorado mountains.
+      </p>
+      <p>
+        Outside of my full-time, I occasionally take on freelance work. If you
+        are looking for someone to work with to design and/or develop your web
+        app or website, feel free to drop me a line.
+      </p>
+      <p>
+        You can find me on&nbsp;
+        <a
+          class="underline"
+          href="https://github.com/brightybaron/"
+          target="_blank"
+        >
+          Github
+        </a>
+        &nbsp;and&nbsp;
+        <a
+          class="underline"
+          href="https://www.instagram.com/ardipanda54/"
+          target="_blank"
+        >
+          Instagram
+        </a>
+      </p>
+    </article>
+  </div>
+</MainLayout>
