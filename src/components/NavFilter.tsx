@@ -10,6 +10,7 @@ export default function NavFilter() {
     if (typeof window !== "undefined") {
       const iso = new Isotope(".konten", {
         itemSelector: ".nav-content",
+        percentPosition: true,
         masonry: {
           columnWidth: "",
         },

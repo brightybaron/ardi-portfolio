@@ -24,7 +24,6 @@ export const getContentBySlug = async (slug: string, category: string) => {
     const result = await prisma.post.findUnique({
       where: {
         slug: slug,
-        category: category,
       },
       include: {
         images: true, // Include related images if you have a relation defined
