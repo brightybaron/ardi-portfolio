@@ -12,7 +12,7 @@ export default function NavFilter() {
         itemSelector: ".nav-content",
         percentPosition: true,
         masonry: {
-          columnWidth: "",
+          columnWidth: ".nav-content",
         },
       });
 
