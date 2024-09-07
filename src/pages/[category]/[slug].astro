@@ -18,7 +18,7 @@ const { category, slug } = Astro.params;
 
 const data = await getContentBySlug(slug, category);
 
-export const prerender = true;
+export const prerender = false;
 ---
 
 <MainLayout pageTitle={data?.title}>
