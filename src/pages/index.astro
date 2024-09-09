@@ -2,6 +2,7 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import NavFilter from "@components/NavFilter";
 import { getContent } from "@lib/data";
+import { formatDate } from "@lib/utils";
 
 const supabaseBucket = import.meta.env.PUBLIC_SUPABASE_BUCKET;
 const datas = await getContent();
@@ -16,13 +17,7 @@ const datas = await getContent();
         with me. Sometimes I do photography. Here is what I am up to now.
       </p>
       <p class="text-gray-500 text-xs italic mt-3">
-        {
-          new Date("25 May 2024").toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })
-        }
+        {formatDate("25 May 2024".toString(), "/")}
       </p>
     </div>
     <div class="mt-12">
@@ -39,11 +34,11 @@ const datas = await getContent();
               datas && datas.length > 0
                 ? datas.map((content: any) => (
                     <div
-                      class={`nav-content ${content.category} float-left w-[calc(1/2*100%-1rem)] md:w-[calc(1/3*100%-1rem)] lg:w-[calc(1/4*100%-1rem)] mr-4 mb-4 cursor-pointer overflow-hidden rounded-xl`}
+                      class={`nav-content ${content.category} float-left w-[calc(1/2*100%-0.5rem)] md:w-[calc(1/3*100%-0.5rem)] lg:w-[calc(1/4*100%-0.5rem)] mr-2 mb-2 cursor-pointer overflow-hidden rounded-md`}
                       data-category={content.category}
                     >
                       <a
-                        class="w-full h-full relative flex flex-wrap overflow-hidden transition-all justify-center items-center aspect-square hover:scale-[1.03] rounded-xl border-b"
+                        class="w-full h-full relative flex flex-wrap overflow-hidden transition-all justify-center items-center aspect-square hover:scale-[1.01] rounded-md border-b"
                         href={`/${content.category}/${content.slug}`}
                       >
                         {content.images.map((img: any) => (
@@ -60,18 +55,12 @@ const datas = await getContent();
                       </a>
                       <div class="bg-white/30 w-full pl-px pt-1 flex flex-wrap justify-evenly">
                         <p class="text-gray-500">
-                          {new Date(content.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )}
+                          {content &&
+                            formatDate(content.createdAt.toString(), "/")}
                         </p>
                         <p
                           class:list={[
-                            "text-end capitalize text-gray-900 px-1",
+                            "text-end capitalize text-gray-500 px-1",
                             {
                               "bg-teal-200":
                                 content.category.includes("photos"),
@@ -89,7 +78,7 @@ const datas = await getContent();
                           {content.category}
                         </p>
                       </div>
-                      <p class="font-semibold mb-2 text-base underline text-center truncate">
+                      <p class="font-semibold mb-2 text-base underline text-center truncate text-gray-700">
                         {content.title}
                       </p>
                     </div>

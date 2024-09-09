@@ -27,16 +27,17 @@ export const prerender = false;
       <section class="mx-auto w-full sm:w-3/4">
         <h1 class="font-semibold text-base mb-4 text-center">{data.title}</h1>
         <div class="flex justify-between mb-4">
-          <span>
-            <small class="text-gray-500 block text-xs">Location</small>
-            <p class="text-gray-700 font-medium">{data.location}</p>
-          </span>
-          <span>
+          <div class="flex-1">
             <small class="text-gray-500 block text-xs">Published at</small>
-            <p class="text-gray-500">
-              {data && formatDate(data.createdAt.toString())}
+            <p class="text-gray-700 font-medium">
+              {data &&
+                formatDate(data.createdAt.toString(), `/${data.category}`)}
             </p>
-          </span>
+          </div>
+          <div class="flex-1 text-end">
+            <small class="text-gray-500 block text-xs">Location</small>
+            <p class="text-gray-700 font-medium">{data?.location}</p>
+          </div>
         </div>
         <div class="flex flex-col items-center justify-center gap-12">
           {data.images.map((img) => (
@@ -64,10 +65,11 @@ export const prerender = false;
             <div class="flex-1">
               <small class="text-gray-500 block text-xs">Published at</small>
               <p class="text-gray-700 font-medium">
-                {data && formatDate(data.createdAt.toString())}
+                {data &&
+                  formatDate(data.createdAt.toString(), `/${data.category}`)}
               </p>
             </div>
-            <div class="flex-1">
+            <div class="flex-1 text-end">
               <small class="text-gray-500 block text-xs">Location</small>
               <p class="text-gray-700 font-medium">{data?.location}</p>
             </div>
